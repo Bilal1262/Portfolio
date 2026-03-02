@@ -4,10 +4,12 @@ import Project from '@/app/models/Project'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/lib/auth'
 
+export const runtime = 'nodejs'
+
 export async function GET() {
   try {
     await connectDB()
-    const projects = await Project.find().sort({ createdAt: -1 })
+    const projects = await Project.find({}).sort({ createdAt: -1 }).lean()
     return NextResponse.json(projects)
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
@@ -17,26 +19,29 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions)
-    
-    if (!session || session.user?.role !== 'admin') {
+
+    if (!session || (session.user as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await request.json()
     await connectDB()
-    
+
     const project = await Project.create(body)
     return NextResponse.json(project)
   } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Failed to create project' }, { status: 500 })
+    return NextResponse.json(
+      { error: error.message || 'Failed to create project' },
+      { status: 500 }
+    )
   }
 }
 
 export async function DELETE(request: Request) {
   try {
     const session = await getServerSession(authOptions)
-    
-    if (!session || session.user?.role !== 'admin') {
+
+    if (!session || (session.user as any)?.role !== 'admin') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -58,4 +63,4 @@ export async function DELETE(request: Request) {
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })
   }
-} 
+}
