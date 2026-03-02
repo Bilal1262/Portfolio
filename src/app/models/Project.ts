@@ -22,7 +22,7 @@ const ProjectSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please specify the category'],
-    enum: ['robotics', 'ai', 'web']
+    enum: ['Perception', 'Localization', 'Planning', 'Reinforcement Learning', 'Others']
   },
   demoLink: String,
   githubLink: String,

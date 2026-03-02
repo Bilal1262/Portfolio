@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
-    "@react-three/drei": "^9.88.0",
-    "@react-three/fiber": "^8.2.2",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/next-auth": "^3.13.0",
     "@types/three": "^0.174.0",
@@ -23,7 +23,7 @@
     "next-auth": "^4.24.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.152.2"
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
